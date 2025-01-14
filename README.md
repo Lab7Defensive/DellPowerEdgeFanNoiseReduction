@@ -18,36 +18,30 @@ This script dynamically controls the fans on a Dell R720xd server, prioritizing 
   ```bash
   sudo apt install ipmitool
 Root Access: The script requires root privileges to control the server fans.
-2. Download the Script
+### 2. Download the Script
 Save the script to /usr/local/bin/fan_control.sh:
 
-bash
-Copy code
+```bash
 sudo nano /usr/local/bin/fan_control.sh
+```
 Paste the script content and save.
 
-3. Make the Script Executable
-bash
-Copy code
+### 3. Make the Script Executable
+```bash
 sudo chmod +x /usr/local/bin/fan_control.sh
-4. Run the Script Manually
-Start the script manually:
+```
 
-bash
-Copy code
-sudo /usr/local/bin/fan_control.sh
-5. Stop the Script
-To stop the script, press CTRL+C. The script will automatically restore dynamic fan control upon exit.
+From here you can either start the script manually or automate it to start on boot with a system service:
 
-Automate the Script with systemd
-1. Create a Systemd Service File
+## Automate the Script with systemd
+### 1. Create a Systemd Service File
 Create a new service file:
 
-bash
-Copy code
+```bash
 sudo nano /etc/systemd/system/fan_control.service
+```
 Paste the following:
-
+```bash
 ini
 Copy code
 [Unit]
@@ -63,26 +57,31 @@ StandardError=journal
 
 [Install]
 WantedBy=multi-user.target
-2. Reload and Enable the Service
+```
+
+### 2. Reload and Enable the Service
 Reload systemd to recognize the new service:
 
-bash
-Copy code
+```bash
 sudo systemctl daemon-reload
 sudo systemctl enable fan_control.service
+```
+
 Start the service:
 
-bash
-Copy code
+```bash
 sudo systemctl start fan_control.service
-3. Verify the Service
+```
+
+### 3. Verify the Service
 Check the service status:
 
-bash
-Copy code
+```bash
 sudo systemctl status fan_control.service
-Configuration
-Adjustable Parameters
+```
+---
+## Configuration
+### Adjustable Parameters
 You can modify these parameters in the script to suit your needs:
 
 TEMP_CHECK_INTERVAL: Time between temperature checks (default: 30 seconds).
@@ -93,46 +92,43 @@ FAN_SPEEDS: Fan speeds corresponding to the thresholds.
 Example
 To adjust fan speeds more aggressively, modify:
 
-bash
-Copy code
+```bash
 TEMP_THRESHOLDS=(35 45 55 65 75)
 FAN_SPEEDS=(20 30 40 50 60)
-Logs
+```
+---
+## Logs
 The script logs all actions, temperature readings, and errors to:
-
-plaintext
-Copy code
 /var/log/fan_control.log
-To view the logs:
 
-bash
-Copy code
+### To view the logs:
+
+```bash
 tail -f /var/log/fan_control.log
-Troubleshooting
-Common Issues
+```
+---
+## Troubleshooting
+### Common Issues
 ipmitool Command Fails:
 
 Ensure ipmitool is installed and functional:
-bash
-Copy code
+```bash
 ipmitool sdr
 Ensure IPMI is enabled in the BIOS/UEFI.
+```
 Service Fails to Start:
 
 Check the service logs:
-bash
-Copy code
+```bash
 sudo journalctl -u fan_control.service
+```
+
 Fan Speed Fluctuations:
 
 Increase the TEMP_CHECK_INTERVAL or adjust TEMP_THRESHOLDS and FAN_SPEEDS to reduce sensitivity.
-License
+## License
 This script is released under the MIT License.
 
-yaml
-Copy code
-
----
 
 ### **How to Use This README**
 1. Save the content as `README.md` in your GitHub repository.
