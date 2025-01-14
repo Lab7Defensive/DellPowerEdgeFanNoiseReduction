@@ -14,9 +14,10 @@ This script dynamically controls the fans on a Dell R720xd server, prioritizing 
 ## How to Use
 
 ### 1. Prerequisites
-- **IPMItool**: Ensure `ipmitool` is installed:
+**IPMItool**: Ensure `ipmitool` is installed:
   ```bash
   sudo apt install ipmitool
+```
 Root Access: The script requires root privileges to control the server fans.
 ### 2. Download the Script
 Save the script to /usr/local/bin/fan_control.sh:
